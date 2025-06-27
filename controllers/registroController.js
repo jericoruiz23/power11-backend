@@ -11,11 +11,8 @@ exports.registrarUsuario = async (req, res) => {
         const nuevoRegistro = new Registro({ nombre, email, cedula, empresa, cargo, token });
         await nuevoRegistro.save();
 
-        // IP local de tu red + puerto del backend
-        const ipLocal = 'http://172.30.2.82:3001'; // 👈 Cambia esto con tu IP real local
-        const urlVerificacion = `${ipLocal}/api/registro/verificar/${token}`;
-
-        const qrImage = await generarQR(urlVerificacion);
+        // Generar QR solo con el token, sin URL delante
+        const qrImage = await generarQR(token);
 
         res.status(201).json({ mensaje: 'Registro exitoso.', token, qrImage });
     } catch (error) {
@@ -23,6 +20,7 @@ exports.registrarUsuario = async (req, res) => {
         res.status(500).json({ error: 'Error al registrar usuario' });
     }
 };
+
 
 
 
