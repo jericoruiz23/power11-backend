@@ -1,8 +1,10 @@
 const Registro = require('../models/Registro');
 const { v4: uuidv4 } = require('uuid');
 const { generarQR } = require('../utils/qrGenerator');
-// const { enviarCorreo } = require('../utils/emailSender'); // Comenta esta línea
 
+const BASE_URL = 'https://power11-form.onrender.com/api/verificar'; // asegúrate de que coincida con tu dominio real
+
+// REGISTRO
 exports.registrarUsuario = async (req, res) => {
     try {
         const { nombre, email, cedula, empresa, cargo } = req.body;
@@ -11,8 +13,9 @@ exports.registrarUsuario = async (req, res) => {
         const nuevoRegistro = new Registro({ nombre, email, cedula, empresa, cargo, token });
         await nuevoRegistro.save();
 
-        // Generar QR solo con el token, sin URL delante
-        const qrImage = await generarQR(token);
+        // Generar QR con la URL completa
+        const qrURL = `${BASE_URL}/${token}`;
+        const qrImage = await generarQR(qrURL);
 
         res.status(201).json({ mensaje: 'Registro exitoso.', token, qrImage });
     } catch (error) {
@@ -21,18 +24,17 @@ exports.registrarUsuario = async (req, res) => {
     }
 };
 
-
-
-
+// VERIFICAR QR
 exports.verificarQR = async (req, res) => {
     try {
         const { token } = req.params;
+
         const usuario = await Registro.findOne({ token });
 
         if (!usuario) {
             return res.send(`
                 <html>
-                    <head><title>QR no válido</title></head>
+                    <head><title>QR inválido</title></head>
                     <body style="font-family: Arial; text-align: center; padding: 50px;">
                         <h1 style="color: red;">❌ QR no válido o no registrado.</h1>
                     </body>
@@ -43,7 +45,7 @@ exports.verificarQR = async (req, res) => {
         if (usuario.estado === 'inactivo') {
             return res.send(`
                 <html>
-                    <head><title>Ya registrado</title></head>
+                    <head><title>Ya ingresado</title></head>
                     <body style="font-family: Arial; text-align: center; padding: 50px;">
                         <h1 style="color: orange;">⚠️ ${usuario.nombre} ya ingresó al evento.</h1>
                         <p>Fecha de ingreso: ${new Date(usuario.fechaIngreso || usuario.updatedAt).toLocaleString()}</p>
@@ -52,7 +54,7 @@ exports.verificarQR = async (req, res) => {
             `);
         }
 
-        // Primera vez que lo escanea
+        // Primera vez que se escanea: registrar ingreso
         usuario.estado = 'inactivo';
         usuario.fechaIngreso = new Date();
         await usuario.save();
@@ -81,10 +83,10 @@ exports.verificarQR = async (req, res) => {
     }
 };
 
-
+// OBTENER TODOS
 exports.obtenerRegistros = async (req, res) => {
     try {
-        const registros = await Registro.find().sort({ fechaRegistro: -1 }); // más recientes primero
+        const registros = await Registro.find().sort({ createdAt: -1 });
         res.status(200).json(registros);
     } catch (error) {
         console.error('Error obteniendo registros:', error);
@@ -92,6 +94,7 @@ exports.obtenerRegistros = async (req, res) => {
     }
 };
 
+// ELIMINAR
 exports.eliminarRegistro = async (req, res) => {
     try {
         const { id } = req.params;
@@ -107,5 +110,3 @@ exports.eliminarRegistro = async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar registro' });
     }
 };
-
-
