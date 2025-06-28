@@ -1,7 +1,6 @@
 const Registro = require('../models/Registro');
 const { v4: uuidv4 } = require('uuid');
 const { generarQR } = require('../utils/qrGenerator');
-// const { enviarCorreo } = require('../utils/emailSender'); // Comenta esta línea
 
 exports.registrarUsuario = async (req, res) => {
     try {
@@ -11,8 +10,12 @@ exports.registrarUsuario = async (req, res) => {
         const nuevoRegistro = new Registro({ nombre, email, cedula, empresa, cargo, token });
         await nuevoRegistro.save();
 
-        // Generar QR solo con el token, sin URL delante
-        const qrImage = await generarQR(token);
+        // ✅ URL completa para verificación desde QR
+        const baseUrl = 'https://power11-form.onrender.com';
+        const urlVerificacion = `${baseUrl}/api/registro/verificar/${token}`;
+
+        // Generar imagen QR a partir de la URL completa
+        const qrImage = await generarQR(urlVerificacion);
 
         res.status(201).json({ mensaje: 'Registro exitoso.', token, qrImage });
     } catch (error) {
@@ -20,9 +23,6 @@ exports.registrarUsuario = async (req, res) => {
         res.status(500).json({ error: 'Error al registrar usuario' });
     }
 };
-
-
-
 
 exports.verificarQR = async (req, res) => {
     try {
@@ -81,10 +81,9 @@ exports.verificarQR = async (req, res) => {
     }
 };
 
-
 exports.obtenerRegistros = async (req, res) => {
     try {
-        const registros = await Registro.find().sort({ fechaRegistro: -1 }); // más recientes primero
+        const registros = await Registro.find().sort({ fechaRegistro: -1 });
         res.status(200).json(registros);
     } catch (error) {
         console.error('Error obteniendo registros:', error);
@@ -107,5 +106,3 @@ exports.eliminarRegistro = async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar registro' });
     }
 };
-
-
