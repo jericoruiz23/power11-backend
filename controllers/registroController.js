@@ -28,7 +28,6 @@ exports.registrarUsuario = async (req, res) => {
 exports.verificarQR = async (req, res) => {
     try {
         const { token } = req.params;
-
         const usuario = await Registro.findOne({ token });
 
         if (!usuario) {
