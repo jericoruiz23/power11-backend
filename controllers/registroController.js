@@ -30,16 +30,26 @@ exports.verificarQR = async (req, res) => {
         const usuario = await Registro.findOne({ token });
 
         if (!usuario) {
-            return res.status(404).json({ mensaje: 'QR no válido o no registrado.' });
+            return res.send(`
+                <html>
+                    <head><title>QR no válido</title></head>
+                    <body style="font-family: Arial; text-align: center; padding: 50px;">
+                        <h1 style="color: red;">❌ QR no válido o no registrado.</h1>
+                    </body>
+                </html>
+            `);
         }
 
         if (usuario.estado === 'inactivo') {
-            return res.status(200).json({
-                mensaje: `Este usuario ya ingresó al evento.`,
-                nombre: usuario.nombre,
-                estado: usuario.estado,
-                fechaIngreso: usuario.fechaIngreso || usuario.updatedAt
-            });
+            return res.send(`
+                <html>
+                    <head><title>Ya registrado</title></head>
+                    <body style="font-family: Arial; text-align: center; padding: 50px;">
+                        <h1 style="color: orange;">⚠️ ${usuario.nombre} ya ingresó al evento.</h1>
+                        <p>Fecha de ingreso: ${new Date(usuario.fechaIngreso || usuario.updatedAt).toLocaleString()}</p>
+                    </body>
+                </html>
+            `);
         }
 
         // Primera vez que lo escanea
@@ -47,18 +57,30 @@ exports.verificarQR = async (req, res) => {
         usuario.fechaIngreso = new Date();
         await usuario.save();
 
-        return res.status(200).json({
-            mensaje: `Bienvenido ${usuario.nombre}, acceso registrado.`,
-            nombre: usuario.nombre,
-            estado: usuario.estado,
-            fechaIngreso: usuario.fechaIngreso
-        });
+        return res.send(`
+            <html>
+                <head><title>Acceso registrado</title></head>
+                <body style="font-family: Arial; text-align: center; padding: 50px;">
+                    <h1 style="color: green;">✅ ¡Bienvenido ${usuario.nombre}!</h1>
+                    <p>Tu ingreso ha sido registrado con éxito el ${new Date(usuario.fechaIngreso).toLocaleString()}</p>
+                </body>
+            </html>
+        `);
 
     } catch (error) {
         console.error('Error verificando QR:', error);
-        res.status(500).json({ error: 'Error al verificar QR' });
+        return res.send(`
+            <html>
+                <head><title>Error</title></head>
+                <body style="font-family: Arial; text-align: center; padding: 50px;">
+                    <h1 style="color: red;">❌ Error al verificar QR.</h1>
+                    <p>Intenta nuevamente más tarde.</p>
+                </body>
+            </html>
+        `);
     }
 };
+
 
 exports.obtenerRegistros = async (req, res) => {
     try {
