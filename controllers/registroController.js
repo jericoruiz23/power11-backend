@@ -2,7 +2,7 @@ const Registro = require('../models/Registro');
 const { v4: uuidv4 } = require('uuid');
 const { generarQR } = require('../utils/qrGenerator');
 
-const BASE_URL = 'https://power11-form.onrender.com/api/verificar'; // asegúrate de que coincida con tu dominio real
+const BASE_URL = 'https://power11-form.onrender.com/api/registro/verificar'; // asegúrate de que coincida con tu dominio real
 
 // REGISTRO
 exports.registrarUsuario = async (req, res) => {
@@ -68,7 +68,7 @@ exports.verificarQR = async (req, res) => {
             </html>
         `);
 
-        
+
 
     } catch (error) {
         console.error('Error verificando QR:', error);
