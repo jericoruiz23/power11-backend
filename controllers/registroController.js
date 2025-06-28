@@ -68,6 +68,8 @@ exports.verificarQR = async (req, res) => {
             </html>
         `);
 
+        
+
     } catch (error) {
         console.error('Error verificando QR:', error);
         return res.send(`
