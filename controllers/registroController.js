@@ -1,6 +1,8 @@
 const Registro = require('../models/Registro');
 const { v4: uuidv4 } = require('uuid');
 const { generarQR } = require('../utils/qrGenerator');
+const { enviarCorreoConQR } = require('../utils/emailSender');
+
 
 const BASE_URL = 'https://power11-form.onrender.com/api/registro/verificar'; // asegúrate de que coincida con tu dominio real
 
@@ -109,5 +111,28 @@ exports.eliminarRegistro = async (req, res) => {
     } catch (error) {
         console.error('Error eliminando registro:', error);
         res.status(500).json({ error: 'Error al eliminar registro' });
+    }
+};
+
+exports.enviarQRsMasivo = async (req, res) => {
+    try {
+        const registros = await Registro.find({ email: { $exists: true }, token: { $exists: true } });
+
+        for (const usuario of registros) {
+            try {
+                await enviarCorreoConQR({
+                    destinatario: usuario.email,
+                    nombre: usuario.nombre,
+                    token: usuario.token
+                });
+            } catch (error) {
+                console.error(`❌ Error enviando a ${usuario.email}:`, error.message);
+            }
+        }
+
+        res.status(200).json({ mensaje: 'Correos enviados exitosamente.' });
+    } catch (error) {
+        console.error('❌ Error en envío masivo:', error);
+        res.status(500).json({ error: 'Error al enviar correos masivos' });
     }
 };
