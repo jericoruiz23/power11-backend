@@ -116,8 +116,12 @@ exports.eliminarRegistro = async (req, res) => {
 
 exports.enviarQRsMasivo = async (req, res) => {
     try {
-        const registros = await Registro.find({ email: { $exists: true }, token: { $exists: true } });
+        const registros = await Registro.find({
+            email: { $exists: true, $ne: '' },
+            token: { $exists: true, $ne: '' }
+        });
 
+        let enviados = 0;
         for (const usuario of registros) {
             try {
                 await enviarCorreoConQR({
@@ -125,12 +129,13 @@ exports.enviarQRsMasivo = async (req, res) => {
                     nombre: usuario.nombre,
                     token: usuario.token
                 });
+                enviados++;
             } catch (error) {
                 console.error(`❌ Error enviando a ${usuario.email}:`, error.message);
             }
         }
 
-        res.status(200).json({ mensaje: 'Correos enviados exitosamente.' });
+        res.status(200).json({ mensaje: `Correos enviados: ${enviados}/${registros.length}` });
     } catch (error) {
         console.error('❌ Error en envío masivo:', error);
         res.status(500).json({ error: 'Error al enviar correos masivos' });
