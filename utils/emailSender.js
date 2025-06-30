@@ -21,13 +21,30 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
         to: destinatario,
         subject: 'Tu acceso al evento Power11',
         html: `
-            <div style="font-family: Arial, sans-serif;">
-                <h2>Hola ${nombre},</h2>
-                <p>Gracias por registrarte. Presenta el siguiente código QR al ingresar al evento el <strong>24 de julio</strong>:</p>
-                <img src="${qrDataURL}" alt="Código QR" style="width: 200px; margin: 20px 0;" />
-                <p>Nos vemos pronto,<br/>Equipo Power11</p>
+        <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px;">
+            <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+            <div style="text-align: center;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/IBM_logo.svg" alt="IBM Logo" style="width: 120px; margin-bottom: 20px;" />
             </div>
+            <h2 style="color: #0a2f5c;">Hola ${nombre},</h2>
+            <p style="font-size: 16px; color: #333333;">
+                🎉 Gracias por registrarte en el evento <strong>Power11</strong>.<br/>
+                Presenta el siguiente código QR al ingresar el día <strong>24 de julio</strong>:
+            </p>
+            <div style="text-align: center; margin: 30px 0;">
+                <img src="${qrDataURL}" alt="Código QR" style="width: 220px;" />
+            </div>
+            <p style="font-size: 16px; color: #333333;">
+                Si tienes alguna duda, puedes responder a este correo.<br/>
+                ¡Nos vemos pronto!
+            </p>
+            <p style="font-size: 16px; color: #0a2f5c; font-weight: bold;">
+                — Equipo NEXSYS - IBM
+            </p>
+            </div>
+        </div>
         `
+
     };
 
     await transporter.sendMail(mailOptions);
