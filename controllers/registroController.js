@@ -34,57 +34,65 @@ exports.verificarQR = async (req, res) => {
 
         if (!usuario) {
             return res.send(`
-                <html>
-                    <head><title>QR inválido</title></head>
-                    <body style="font-family: Arial; text-align: center; padding: 50px;">
-                        <h1 style="color: red;">❌ QR no válido o no registrado.</h1>
-                    </body>
-                </html>
-            `);
+        <html>
+          <head><title>QR inválido</title></head>
+          <body style="font-family: Arial; text-align: center; padding: 50px;">
+            <h1 style="color: red;">❌ QR no válido</h1>
+            <p>Este código no está registrado en la base de datos.</p>
+          </body>
+        </html>
+      `);
         }
+
+        let mensaje = '';
+        let color = '';
+        let yaIngresado = false;
 
         if (usuario.estado === 'inactivo') {
-            return res.send(`
-                <html>
-                    <head><title>Ya ingresado</title></head>
-                    <body style="font-family: Arial; text-align: center; padding: 50px;">
-                        <h1 style="color: orange;">⚠️ ${usuario.nombre} ya ingresó al evento.</h1>
-                        <p>Fecha de ingreso: ${new Date(usuario.fechaIngreso || usuario.updatedAt).toLocaleString()}</p>
-                    </body>
-                </html>
-            `);
+            yaIngresado = true;
+            mensaje = `⚠️ ${usuario.nombre} ya ingresó al evento.`;
+            color = 'orange';
+        } else {
+            // Registrar ingreso
+            usuario.estado = 'inactivo';
+            usuario.fechaIngreso = new Date();
+            await usuario.save();
+            mensaje = `✅ Ingreso registrado exitosamente.`;
+            color = 'green';
         }
 
-        // Primera vez que se escanea: registrar ingreso
-        usuario.estado = 'inactivo';
-        usuario.fechaIngreso = new Date();
-        await usuario.save();
-
         return res.send(`
-            <html>
-                <head><title>Acceso registrado</title></head>
-                <body style="font-family: Arial; text-align: center; padding: 50px;">
-                    <h1 style="color: green;">✅ ¡Bienvenido ${usuario.nombre}!</h1>
-                    <p>Tu ingreso ha sido registrado con éxito el ${new Date(usuario.fechaIngreso).toLocaleString()}</p>
-                </body>
-            </html>
-        `);
-
-
-
+      <html>
+        <head><title>Validación de QR</title></head>
+        <body style="font-family: Arial, sans-serif; padding: 40px; max-width: 600px; margin: auto; background-color: #f7f7f7; border-radius: 10px;">
+          <h1 style="color: ${color}; text-align: center;">${mensaje}</h1>
+          <hr/>
+          <div style="font-size: 16px; color: #333;">
+            <p><strong>Nombre:</strong> ${usuario.nombre}</p>
+            <p><strong>Cédula:</strong> ${usuario.cedula}</p>
+            <p><strong>Empresa:</strong> ${usuario.empresa}</p>
+            <p><strong>Cargo:</strong> ${usuario.cargo}</p>
+            <p><strong>Email:</strong> ${usuario.email}</p>
+            <p><strong>Fecha de ingreso:</strong> ${new Date(usuario.fechaIngreso || usuario.updatedAt).toLocaleString()}</p>
+            <p><strong>Estado:</strong> ${yaIngresado ? 'Ya ingresó' : 'Ingreso registrado'}</p>
+          </div>
+        </body>
+      </html>
+    `);
     } catch (error) {
         console.error('Error verificando QR:', error);
         return res.send(`
-            <html>
-                <head><title>Error</title></head>
-                <body style="font-family: Arial; text-align: center; padding: 50px;">
-                    <h1 style="color: red;">❌ Error al verificar QR.</h1>
-                    <p>Intenta nuevamente más tarde.</p>
-                </body>
-            </html>
-        `);
+      <html>
+        <head><title>Error</title></head>
+        <body style="font-family: Arial; text-align: center; padding: 50px;">
+          <h1 style="color: red;">❌ Error al verificar QR</h1>
+          <p>Por favor intenta nuevamente más tarde.</p>
+        </body>
+      </html>
+    `);
     }
 };
+
 
 // OBTENER TODOS
 exports.obtenerRegistros = async (req, res) => {

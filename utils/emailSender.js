@@ -44,7 +44,6 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
             </div>
         </div>
         `
-
     };
 
     await transporter.sendMail(mailOptions);
