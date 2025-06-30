@@ -24,7 +24,7 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
         <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px;">
             <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
             <div style="text-align: center;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/IBM_logo.svg" alt="IBM Logo" style="width: 120px; margin-bottom: 20px;" />
+                <img src="https://www.nexsysla.com/co/wp-content/uploads/sites/2/2022/06/nexsys-logo-light-2023.png" alt="IBM Logo" style="width: 120px; margin-bottom: 20px;" />
             </div>
             <h2 style="color: #0a2f5c;">Hola ${nombre},</h2>
             <p style="font-size: 16px; color: #333333;">
