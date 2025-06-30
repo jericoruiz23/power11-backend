@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { registrarUsuario, verificarQR, obtenerRegistros, eliminarRegistro, enviarCorreoQR } = require('../controllers/registroController');
+const { registrarUsuario, verificarQR, obtenerRegistros, eliminarRegistro, enviarQRsMasivo } = require('../controllers/registroController');
 
 router.post('/', registrarUsuario);
 router.get('/verificar/:token', verificarQR);
