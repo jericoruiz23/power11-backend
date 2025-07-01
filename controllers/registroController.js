@@ -55,7 +55,8 @@ exports.verificarQR = async (req, res) => {
         } else {
             // Registrar ingreso
             usuario.estado = 'inactivo';
-            usuario.fechaIngreso = new Date();
+            const utcMinus5 = new Date(new Date().getTime() - 5 * 60 * 60 * 1000);
+            usuario.fechaIngreso = utcMinus5;
             await usuario.save();
             mensaje = `✅ Ingreso registrado exitosamente.`;
             color = 'green';
