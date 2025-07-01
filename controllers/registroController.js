@@ -6,12 +6,26 @@ const { enviarCorreoConQR } = require('../utils/emailSender');
 
 const BASE_URL = 'https://power11-form.onrender.com/api/registro/verificar'; // asegúrate de que coincida con tu dominio real
 
-// REGISTRO
 exports.registrarUsuario = async (req, res) => {
     try {
         const { nombre, email, cedula, empresa, cargo } = req.body;
-        const token = uuidv4();
 
+        // Validar que no exista ya el email o cédula
+        const existente = await Registro.findOne({
+            $or: [
+                { email: email },
+                { cedula: cedula }
+            ]
+        });
+
+        if (existente) {
+            return res.status(400).json({
+                error: 'El correo o la cédula ya están registrados.'
+            });
+        }
+
+        // Crear nuevo registro
+        const token = uuidv4();
         const nuevoRegistro = new Registro({ nombre, email, cedula, empresa, cargo, token });
         await nuevoRegistro.save();
 
@@ -25,6 +39,7 @@ exports.registrarUsuario = async (req, res) => {
         res.status(500).json({ error: 'Error al registrar usuario' });
     }
 };
+
 
 // VERIFICAR QR
 exports.verificarQR = async (req, res) => {
