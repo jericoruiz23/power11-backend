@@ -156,3 +156,65 @@ exports.enviarQRsMasivo = async (req, res) => {
         res.status(500).json({ error: 'Error al enviar correos masivos' });
     }
 };
+
+exports.ingestaMasiva = async (req, res) => {
+    try {
+        const registros = req.body;
+
+        if (!Array.isArray(registros)) {
+            return res.status(400).json({ error: 'Se esperaba un array de registros.' });
+        }
+
+        const resultados = {
+            insertados: 0,
+            duplicadosLocales: [],
+            duplicadosEnBD: [],
+        };
+
+        const seen = new Set();
+        const unicos = [];
+
+        for (const reg of registros) {
+            const clave = `${reg.email?.toLowerCase()}-${reg.cedula}`;
+            if (seen.has(clave)) {
+                resultados.duplicadosLocales.push(reg);
+            } else {
+                seen.add(clave);
+                unicos.push(reg);
+            }
+        }
+
+        for (const reg of unicos) {
+            const existe = await Registro.findOne({
+                $or: [
+                    { email: reg.email?.toLowerCase() },
+                    { cedula: reg.cedula }
+                ]
+            });
+
+            if (existe) {
+                resultados.duplicadosEnBD.push(reg);
+                continue;
+            }
+
+            const token = uuidv4();
+            const nuevo = new Registro({
+                nombre: reg.nombre,
+                email: reg.email,
+                cedula: reg.cedula,
+                empresa: reg.empresa,
+                cargo: reg.cargo,
+                token
+            });
+
+            await nuevo.save();
+            resultados.insertados++;
+        }
+
+        return res.status(200).json(resultados);
+    } catch (error) {
+        console.error('Error en ingesta masiva:', error);
+        res.status(500).json({ error: 'Error en ingesta masiva' });
+    }
+};
+
