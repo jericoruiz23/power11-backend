@@ -9,6 +9,10 @@ const RegistroSchema = new mongoose.Schema({
     token: String,
     estado: { type: String, default: 'activo' },
     fechaIngreso: Date,
+    correoEnviado: {
+        type: Boolean,
+        default: false
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Registro', RegistroSchema);
