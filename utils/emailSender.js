@@ -46,7 +46,8 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                 <!-- Cuerpo -->
                 <div style="padding: 30px;">
                 <p style="font-size: 16px; color: #333; margin: 0 0 20px;">
-                    👋 Hola <strong>Benjamin R</strong>,<br /><br />
+                
+                    👋 Hola <strong>${nombre}</strong>,<br /><br />
                     Has sido registrado exitosamente al evento <strong>Power11</strong> de IBM y Nexsys.
                     Presenta el siguiente código QR el día <strong>24 de julio</strong> para ingresar al evento.
                 </p>
