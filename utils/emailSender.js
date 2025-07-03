@@ -7,8 +7,8 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: process.env.EMAIL_USER, // tu correo outlook
-        pass: process.env.EMAIL_PASS  // tu contraseña o app password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
 });
 
@@ -53,7 +53,7 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
 
                 <!-- QR -->
                 <div style="text-align: center; margin: 30px 0;">
-                    <img src="./qr.png" alt="QR Code" style="width: 200px; " />
+                    <img src="cid:qrimage" alt="Código QR" style="width: 220px;" />
                     <p style="font-size: 14px; color: #555; margin-top: 10px;">Escanea este código para verificar tu entrada</p>
                 </div>
 
