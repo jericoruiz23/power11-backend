@@ -35,7 +35,8 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                 <img src="cid:qrimage" alt="Código QR" style="width: 220px;" />
             </div>
             <p style="font-size: 16px; color: #333333;">
-                Si tienes alguna duda, puedes responder a este correo.<br/>
+                He leído, entiendo y acepto la Política de Privacidad/Protección de Datos Personales y Cláusulas Informativas de NEXSYS DEL ECUADOR, y el uso o tratamientos que se dará a mis datos personales.
+                Estoy de acuerdo en recibir promociones, descuentos, ofertas, novedades y comunicaciones comerciales personalizadas de NEXSYS DEL ECUADOR y de los fabricantes de productos y servicios que comercializa, a través de e-mail, redes sociales, SMS, y otros medios de comunicación electrónica y física..<br/>
                 ¡Nos vemos pronto!
             </p>
             <p style="font-size: 16px; color: #0a2f5c; font-weight: bold;">
