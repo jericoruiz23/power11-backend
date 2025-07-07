@@ -7,7 +7,7 @@ const { enviarCorreoConQR } = require('../utils/emailSender');
 const BASE_URL = 'https://power11-form.onrender.com/api/registro/verificar'; // asegúrate de que coincida con tu dominio real
 const SECRET = 'un-secreto-muy-fuerte-que-no-vas-a-compartir';
 
-
+// CREAR USUARIO
 exports.registrarUsuario = async (req, res) => {
     try {
         const { nombre, email, cedula, empresa, cargo, partner } = req.body;
@@ -167,7 +167,6 @@ exports.verificarQR = async (req, res) => {
     }
 };
 
-
 // OBTENER TODOS
 exports.obtenerRegistros = async (req, res) => {
     try {
@@ -196,6 +195,7 @@ exports.eliminarRegistro = async (req, res) => {
     }
 };
 
+// ENVIO MASIVO
 exports.enviarQRsMasivo = async (req, res) => {
     try {
         const registros = await Registro.find({
@@ -230,6 +230,7 @@ exports.enviarQRsMasivo = async (req, res) => {
     }
 };
 
+//INGESTA MASIVA EXCEL
 exports.ingestaMasiva = async (req, res) => {
     try {
         const registros = req.body;
@@ -291,3 +292,25 @@ exports.ingestaMasiva = async (req, res) => {
     }
 };
 
+//INSIGHTS
+exports.obtenerInsights = async (req, res) => {
+    try {
+        const registros = await Registro.find();
+
+        const totalRegistrados = registros.length;
+        const totalAsistentes = registros.filter(r => r.estado === 'inactivo').length;
+        const porcentajeAsistencia = totalRegistrados > 0 ? (totalAsistentes / totalRegistrados * 100).toFixed(2) : 0;
+
+        const nuevos = registros.filter(r => r.nuevo === true).length;
+
+        return res.json({
+            totalRegistrados,
+            totalAsistentes,
+            porcentajeAsistencia: Number(porcentajeAsistencia),
+            nuevos
+        });
+    } catch (error) {
+        console.error('Error al obtener insights:', error);
+        return res.status(500).json({ error: 'Error al obtener métricas' });
+    }
+};
