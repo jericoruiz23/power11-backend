@@ -35,7 +35,7 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                                         <img src="https://www.nexsysla.com/co/wp-content/uploads/sites/2/2022/06/nexsys-logo-light-2023.png"
                                             alt="Logo Nexsys" style="width: 130px; display:inline-block;" />
                                         <span style="display:inline-block; width:30px;"></span>
-                                        <img src="https://pngimg.com/d/ibm_PNG19649.png" alt="Logo IBM"
+                                        <img src="https://myleanacademy.com/wp-content/uploads/2020/01/logo-ibm-png-ibm-logo-png-4464.png" alt="Logo IBM"
                                             style="width: 100px; display:inline-block;" />
                                     </td>
                                 </tr>
