@@ -59,22 +59,16 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                 </div>
 
                 <!-- Declaraciones -->
-                <div
-                    style="background-color: #f8f9fb; border-left: 4px solid #004080; padding: 20px; font-size: 14px; color: #444; border-radius: 8px;">
-                    <p style="margin: 0 0 10px;">✅ He leído, entiendo y acepto la
-                    <a href="https://www.nexsysla.com/ec/centro-de-ayuda/politicas/privacidad/#proteccion-datos-personales"
-                        style="color: #004080; text-decoration: underline;">
-                        Política de Privacidad /
-                    </a>Protección de Datos Personales y Cláusulas
-                    Informativas de NEXSYS DEL ECUADOR, y el uso o tratamientos que se dará a mis datos personales.
-                    </p>
+                <div style="background-color: #f8f9fb; border-left: 4px solid #004080; padding: 20px; font-size: 10px; color: #444; border-radius: 8px;">
                     <p style="margin: 0;">
-                    ✅ Estoy de acuerdo en recibir promociones, descuentos, ofertas, novedades y comunicaciones comerciales
-                    personalizadas de NEXSYS DEL ECUADOR y de los fabricantes de productos y servicios que comercializa, a
-                    través de e-mail, redes sociales, SMS, y otros medios de comunicación electrónica y física..<br /><br />
-                    <b>¡Nos vemos pronto!</b>
+                        <b>Cláusula de Confidencialidad:</b> Este mensaje es confidencial y dirigido exclusivamente a su destinatario. Si usted no lo es, elimínelo 
+                        y notifique al remitente. Nexsys del Ecuador no se responsabiliza por el uso indebido de la información. Conforme a la Ley Orgánica de 
+                        Protección de Datos, Nexsys del Ecuador puede realizar transferencias internacionales de datos por el uso de sistemas con almacenamiento 
+                        externo, así como transferencias a terceros para servicios como facturación, despacho, notificación, marketing, entre otros. En Nexsys del 
+                        Ecuador estamos comprometidos con la protección de su información y privacidad.
                     </p>
                 </div>
+
 
                 <!-- CTA -->
                 <div style="text-align: center; margin: 30px 0;">
