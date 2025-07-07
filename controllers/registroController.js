@@ -95,21 +95,63 @@ exports.verificarQR = async (req, res) => {
 
         return res.send(`
             <html>
-              <head><title>Validación de QR</title></head>
-              <body style="font-family: Arial, sans-serif; padding: 40px; max-width: 600px; margin: auto; background-color: #f7f7f7; border-radius: 10px;">
-                <h1 style="color: ${color}; text-align: center;">${mensaje}</h1>
-                <hr/>
-                <div style="font-size: 16px; color: #333;">
-                  <p><strong>Nombre:</strong> ${usuario.nombre}</p>
-                  <p><strong>Cédula:</strong> ${usuario.cedula}</p>
-                  <p><strong>Empresa:</strong> ${usuario.empresa}</p>
-                  <p><strong>Cargo:</strong> ${usuario.cargo}</p>
-                  <p><strong>Email:</strong> ${usuario.email}</p>
-                  <p><strong>Fecha de ingreso:</strong> ${(usuario.fechaIngreso || new Date()).toLocaleString()}</p>
-                  <p><strong>Estado:</strong> ${yaIngresado ? 'Ya ingresó' : 'Ingreso registrado'}</p>
-                </div>
-              </body>
-            </html>
+                <head>
+                    <title>Validación de QR</title>
+                    <style>
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background-color: #f7f7f7;
+                        padding: 40px 20px;
+                        max-width: 600px;
+                        margin: 30px auto;
+                        border-radius: 12px;
+                        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                        color: #333;
+                    }
+                    h1 {
+                        color: ${color};
+                        text-align: center;
+                        font-weight: 700;
+                        margin-bottom: 24px;
+                    }
+                    hr {
+                        border: none;
+                        border-top: 1px solid #ddd;
+                        margin-bottom: 24px;
+                    }
+                    .info p {
+                        font-size: 16px;
+                        line-height: 1.5;
+                        margin: 8px 0;
+                    }
+                    .info strong {
+                        color: #555;
+                        width: 120px;
+                        display: inline-block;
+                    }
+                    /* Para el estado, un estilo especial */
+                    .estado {
+                        font-weight: 600;
+                        color: ${yaIngresado ? '#e67e22' : '#27ae60'};
+                        margin-top: 16px;
+                    }
+                    </style>
+                </head>
+                <body>
+                    <h1>${mensaje}</h1>
+                    <hr />
+                    <div class="info">
+                    <p><strong>Nombre:</strong> ${usuario.nombre}</p>
+                    <p><strong>Cédula:</strong> ${usuario.cedula}</p>
+                    <p><strong>Empresa:</strong> ${usuario.empresa}</p>
+                    <p><strong>Cargo:</strong> ${usuario.cargo}</p>
+                    <p><strong>Email:</strong> ${usuario.email}</p>
+                    <p><strong>Fecha de ingreso:</strong> ${(usuario.fechaIngreso || new Date()).toLocaleString()}</p>
+                    <p class="estado"><strong>Estado:</strong> ${yaIngresado ? 'Ya ingresó' : 'Ingreso registrado'}</p>
+                    </div>
+                </body>
+                </html>
+
         `);
     } catch (error) {
         console.error('Error verificando QR:', error);
