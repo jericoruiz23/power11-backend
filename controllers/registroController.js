@@ -10,7 +10,7 @@ const SECRET = 'un-secreto-muy-fuerte-que-no-vas-a-compartir';
 
 exports.registrarUsuario = async (req, res) => {
     try {
-        const { nombre, email, cedula, empresa, cargo } = req.body;
+        const { nombre, email, cedula, empresa, cargo, partner } = req.body;
 
         // Validar que no exista ya el email o cédula
         const existente = await Registro.findOne({
@@ -28,7 +28,7 @@ exports.registrarUsuario = async (req, res) => {
 
         // Crear nuevo registro
         const token = uuidv4();
-        const nuevoRegistro = new Registro({ nombre, email, cedula, empresa, cargo, token });
+        const nuevoRegistro = new Registro({ nombre, email, cedula, empresa, cargo,partner, token });
         await nuevoRegistro.save();
 
         // Generar QR con la URL completa
@@ -96,7 +96,6 @@ exports.verificarQR = async (req, res) => {
         return res.send(`
             <html>
                 <head>
-                    <title>Validación de QR</title>
                     <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -146,6 +145,7 @@ exports.verificarQR = async (req, res) => {
                     <p><strong>Empresa:</strong> ${usuario.empresa}</p>
                     <p><strong>Cargo:</strong> ${usuario.cargo}</p>
                     <p><strong>Email:</strong> ${usuario.email}</p>
+                    <p><strong>BP:</strong> ${usuario.partner}</p>
                     <p><strong>Fecha de ingreso:</strong> ${(usuario.fechaIngreso || new Date()).toLocaleString()}</p>
                     <p class="estado"><strong>Estado:</strong> ${yaIngresado ? 'Ya ingresó' : 'Ingreso registrado'}</p>
                     </div>

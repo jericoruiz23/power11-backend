@@ -6,6 +6,7 @@ const RegistroSchema = new mongoose.Schema({
     cedula: String,
     empresa: String,
     cargo: String,
+    partner: String,
     token: String,
     estado: { type: String, default: 'activo' },
     fechaIngreso: Date,
