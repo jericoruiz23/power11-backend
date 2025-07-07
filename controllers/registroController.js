@@ -5,6 +5,8 @@ const { enviarCorreoConQR } = require('../utils/emailSender');
 
 
 const BASE_URL = 'https://power11-form.onrender.com/api/registro/verificar'; // asegúrate de que coincida con tu dominio real
+const SECRET = 'un-secreto-muy-fuerte-que-no-vas-a-compartir';
+
 
 exports.registrarUsuario = async (req, res) => {
     try {
@@ -40,10 +42,26 @@ exports.registrarUsuario = async (req, res) => {
     }
 };
 
-
 // VERIFICAR QR
 exports.verificarQR = async (req, res) => {
     try {
+        const secretHeader = req.headers['x-app-secret']; // lee el header enviado
+        const SECRET = process.env.APP_SECRET || 'un-secreto-muy-fuerte-que-no-vas-a-compartir';
+
+        if (!secretHeader || secretHeader !== SECRET) {
+            // Si no existe el header o no coincide, deniega el acceso
+            return res.status(403).send(`
+        <html>
+          <head><title>Acceso denegado</title></head>
+          <body style="font-family: Arial; text-align: center; padding: 50px;">
+            <h1 style="color: red;">❌ Acceso no autorizado</h1>
+            <p>No tienes permiso para acceder a esta página.</p>
+          </body>
+        </html>
+      `);
+        }
+
+        // Aquí sigue tu lógica actual
         const { token } = req.params;
         const usuario = await Registro.findOne({ token });
 
@@ -56,45 +74,8 @@ exports.verificarQR = async (req, res) => {
             <p>Este código no está registrado en la base de datos.</p>
           </body>
         </html>
-      `);
+        `);
         }
-
-        let mensaje = '';
-        let color = '';
-        let yaIngresado = false;
-
-        if (usuario.estado === 'inactivo') {
-            yaIngresado = true;
-            mensaje = `⚠️ ${usuario.nombre} ya ingresó al evento.`;
-            color = 'orange';
-        } else {
-            // Registrar ingreso
-            usuario.estado = 'inactivo';
-            const utcMinus5 = new Date(new Date().getTime() - 5 * 60 * 60 * 1000);
-            usuario.fechaIngreso = utcMinus5;
-            await usuario.save();
-            mensaje = `✅ Ingreso registrado exitosamente.`;
-            color = 'green';
-        }
-
-        return res.send(`
-      <html>
-        <head><title>Validación de QR</title></head>
-        <body style="font-family: Arial, sans-serif; padding: 40px; max-width: 600px; margin: auto; background-color: #f7f7f7; border-radius: 10px;">
-          <h1 style="color: ${color}; text-align: center;">${mensaje}</h1>
-          <hr/>
-          <div style="font-size: 16px; color: #333;">
-            <p><strong>Nombre:</strong> ${usuario.nombre}</p>
-            <p><strong>Cédula:</strong> ${usuario.cedula}</p>
-            <p><strong>Empresa:</strong> ${usuario.empresa}</p>
-            <p><strong>Cargo:</strong> ${usuario.cargo}</p>
-            <p><strong>Email:</strong> ${usuario.email}</p>
-            <p><strong>Fecha de ingreso:</strong> ${new Date(usuario.fechaIngreso || usuario.updatedAt).toLocaleString()}</p>
-            <p><strong>Estado:</strong> ${yaIngresado ? 'Ya ingresó' : 'Ingreso registrado'}</p>
-          </div>
-        </body>
-      </html>
-    `);
     } catch (error) {
         console.error('Error verificando QR:', error);
         return res.send(`
