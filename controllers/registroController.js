@@ -306,9 +306,9 @@ exports.obtenerInsights = async (req, res) => {
     try {
         const registros = await Registro.find();
 
-        const totalRegistrados = registros.length;
         const totalAsistentes = registros.filter(r => r.estado === 'inactivo').length;
         const nuevos = registros.filter(r => r.nuevo === true).length;
+        const totalRegistrados = (registros.length)-nuevos;
 
         const porcentajeAsistencia =
             totalRegistrados > 0
