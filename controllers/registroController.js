@@ -314,7 +314,7 @@ exports.obtenerInsights = async (req, res) => {
 
         const porcentajeAsistencia =
             totalRegistrados > 0
-                ? ((totalAsistentes * 100) / registros).toFixed(2)
+                ? ((totalAsistentes * 100) / registros.length).toFixed(2)
                 : 0;
 
         return res.json({
