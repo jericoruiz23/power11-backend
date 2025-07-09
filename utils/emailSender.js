@@ -32,13 +32,16 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td align="center" style="padding-bottom: 20px;">
-                                        <img src="https://www.nexsysla.com/co/wp-content/uploads/sites/2/2022/06/nexsys-logo-light-2023.png"
-                                            alt="Logo Nexsys" style="width: 130px; display:inline-block;" />
-                                        <span style="display:inline-block; width:30px;"></span>
-                                        <img src="https://myleanacademy.com/wp-content/uploads/2020/01/logo-ibm-png-ibm-logo-png-4464.png" alt="Logo IBM"
-                                            style="width: 100px; display:inline-block;" />
+                                        <div style="display: flex; align-items: center; justify-content: center;">
+                                            <img src="https://www.nexsysla.com/co/wp-content/uploads/sites/2/2022/06/nexsys-logo-light-2023.png"
+                                                alt="Logo Nexsys" style="width: 130px; display: inline-block;" />
+                                            <span style="display:inline-block; width:30px;"></span>
+                                            <img src="https://myleanacademy.com/wp-content/uploads/2020/01/logo-ibm-png-ibm-logo-png-4464.png"
+                                                alt="Logo IBM" style="width: 100px; display: inline-block;" />
+                                        </div>
                                     </td>
-                                    <td valign="middle" style="color: #ffffff; font-size: 24px; font-weight: 600; text-align: center; padding-left: 20px;">
+
+                                    <td valign="middle" style="color: #004080; font-size: 24px; font-weight: 600; text-align: center; padding-left: 20px;">
                                         ¡Tu invitación al Evento Power11 está Lista!
                                     </td>
                                 </tr>
