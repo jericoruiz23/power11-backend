@@ -306,11 +306,10 @@ exports.obtenerInsights = async (req, res) => {
     try {
         const registros = await Registro.find();
 
-        const totalRegistrados = registros.filter(r => r.nuevo === false).length;
         const totalAsistentes = registros.filter(r => r.estado === 'inactivo').length;
-        const porcentajeAsistencia = totalRegistrados > 0 ? ((totalAsistentes * 100) / totalRegistrados ).toFixed(2) : 0;
-
         const nuevos = registros.filter(r => r.nuevo === true).length;
+        const totalRegistrados = registros.filter(r => r.nuevo === false).length-nuevos;
+        const porcentajeAsistencia = totalRegistrados > 0 ? ((totalAsistentes * 100) / (totalRegistrados +nuevos)).toFixed(2) : 0;
 
         return res.json({
             totalRegistrados,
