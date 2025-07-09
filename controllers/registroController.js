@@ -159,6 +159,7 @@ exports.verificarQR = async (req, res) => {
                 <div class="info">
                 <p><strong>Nombre:</strong>${usuario.nombre}</p>
                 <p><strong>Cédula:</strong>${usuario.cedula}</p>
+                <p><strong>Celular:</strong>${usuario.celular}</p>
                 <p><strong>Empresa:</strong>${usuario.empresa}</p>
                 <p><strong>Cargo:</strong>${usuario.cargo}</p>
                 <p><strong>Email:</strong>${usuario.email}</p>
