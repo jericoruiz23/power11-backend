@@ -165,10 +165,6 @@ exports.verificarQR = async (req, res) => {
                 <p><strong>BP:</strong>${usuario.partner}</p>
                 <p><strong>Hora de ingreso:</strong>${(usuario.fechaIngreso || new Date()).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' })}</p>
                 </div>
-
-                <div class="estado">
-                ${yaIngresado ? '⚠️ Ya ingresó previamente al evento' : '✅ Ingreso registrado con éxito'}
-                </div>
             </body>
             </html>
         `);
