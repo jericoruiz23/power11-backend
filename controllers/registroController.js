@@ -111,68 +111,60 @@ exports.verificarQR = async (req, res) => {
                     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                     background: linear-gradient(to right, #eef2f3, #8e9eab);
                     color: #333;
-                    padding: 40px 20px;
-                    max-width: 500px;
+                    padding: 30px 20px;
+                    max-width: 480px;
                     margin: 40px auto;
                     border-radius: 12px;
-                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
                     text-align: center;
                 }
 
                 h1 {
-                    font-size: 26px;
+                    font-size: 24px;
                     color: ${color};
                     margin-bottom: 20px;
                 }
 
                 .info {
                     text-align: left;
-                    margin-top: 30px;
+                    margin-top: 25px;
+                    font-size: 15px;
                 }
 
                 .info p {
-                    margin: 10px 0;
-                    font-size: 16px;
-                    padding-left: 10px;
-                    border-left: 4px solid #ccc;
+                    margin: 6px 0;
+                    padding: 4px 0;
+                    border-bottom: 1px solid #ddd;
                 }
 
                 .info strong {
-                    display: inline-block;
-                    width: 140px;
+                    font-weight: 600;
+                    margin-right: 6px;
                     color: #222;
                 }
 
                 .estado {
-                    font-size: 18px;
+                    font-size: 16px;
                     font-weight: bold;
                     color: ${yaIngresado ? '#e67e22' : '#27ae60'};
                     margin-top: 25px;
                     background-color: ${yaIngresado ? '#fef2e0' : '#e6f4ea'};
-                    padding: 12px;
-                    border-radius: 8px;
-                }
-
-                .logo {
-                    margin-bottom: 20px;
+                    padding: 10px 14px;
+                    border-radius: 6px;
                 }
                 </style>
             </head>
             <body>
-                <div class="logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Logo" width="120"/>
-                </div>
-
                 <h1>${mensaje}</h1>
 
                 <div class="info">
-                <p><strong>Nombre:</strong> ${usuario.nombre}</p>
-                <p><strong>Cédula:</strong> ${usuario.cedula}</p>
-                <p><strong>Empresa:</strong> ${usuario.empresa}</p>
-                <p><strong>Cargo:</strong> ${usuario.cargo}</p>
-                <p><strong>Email:</strong> ${usuario.email}</p>
-                <p><strong>BP:</strong> ${usuario.partner}</p>
-                <p><strong>Hora de ingreso:</strong> ${(usuario.fechaIngreso || new Date()).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' })}</p>
+                <p><strong>Nombre:</strong>${usuario.nombre}</p>
+                <p><strong>Cédula:</strong>${usuario.cedula}</p>
+                <p><strong>Empresa:</strong>${usuario.empresa}</p>
+                <p><strong>Cargo:</strong>${usuario.cargo}</p>
+                <p><strong>Email:</strong>${usuario.email}</p>
+                <p><strong>BP:</strong>${usuario.partner}</p>
+                <p><strong>Hora de ingreso:</strong>${(usuario.fechaIngreso || new Date()).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' })}</p>
                 </div>
 
                 <div class="estado">
@@ -181,6 +173,7 @@ exports.verificarQR = async (req, res) => {
             </body>
             </html>
         `);
+
 
     } catch (error) {
         console.error('Error verificando QR:', error);
