@@ -89,10 +89,6 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                                         Ecuador estamos comprometidos con la protección de su información y privacidad.
                                     </p>
                                 </div>
-
-
-
-
                             </td>
                         </tr>
                         <tr>

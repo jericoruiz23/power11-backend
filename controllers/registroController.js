@@ -103,64 +103,85 @@ exports.verificarQR = async (req, res) => {
 
         return res.send(`
             <html>
-                <head>
-                    <style>
-                    body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #f7f7f7;
-                        padding: 40px 20px;
-                        max-width: 600px;
-                        margin: 30px auto;
-                        border-radius: 12px;
-                        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-                        color: #333;
-                    }
-                    h1 {
-                        color: ${color};
-                        text-align: center;
-                        font-weight: 700;
-                        margin-bottom: 24px;
-                    }
-                    hr {
-                        border: none;
-                        border-top: 1px solid #ddd;
-                        margin-bottom: 24px;
-                    }
-                    .info p {
-                        font-size: 16px;
-                        line-height: 1.5;
-                        margin: 8px 0;
-                    }
-                    .info strong {
-                        color: #555;
-                        width: 120px;
-                        display: inline-block;
-                    }
-                    /* Para el estado, un estilo especial */
-                    .estado {
-                        font-weight: 600;
-                        color: ${yaIngresado ? '#e67e22' : '#27ae60'};
-                        margin-top: 16px;
-                    }
-                    </style>
-                </head>
-                <body>
-                    <h1>${mensaje}</h1>
-                    <hr />
-                    <div class="info">
-                    <p><strong>Nombre:</strong> ${usuario.nombre}</p>
-                    <p><strong>Cédula:</strong> ${usuario.cedula}</p>
-                    <p><strong>Empresa:</strong> ${usuario.empresa}</p>
-                    <p><strong>Cargo:</strong> ${usuario.cargo}</p>
-                    <p><strong>Email:</strong> ${usuario.email}</p>
-                    <p><strong>BP:</strong> ${usuario.partner}</p>
-                    <p><strong>Fecha de ingreso:</strong> ${(usuario.fechaIngreso || new Date()).toLocaleString()}</p>
-                    <p class="estado"><strong>Estado:</strong> ${yaIngresado ? 'Ya ingresó' : 'Ingreso registrado'}</p>
-                    </div>
-                </body>
-                </html>
+            <head>
+                <meta charset="UTF-8">
+                <title>Verificación QR</title>
+                <style>
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    background: linear-gradient(to right, #eef2f3, #8e9eab);
+                    color: #333;
+                    padding: 40px 20px;
+                    max-width: 500px;
+                    margin: 40px auto;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                    text-align: center;
+                }
 
+                h1 {
+                    font-size: 26px;
+                    color: ${color};
+                    margin-bottom: 20px;
+                }
+
+                .info {
+                    text-align: left;
+                    margin-top: 30px;
+                }
+
+                .info p {
+                    margin: 10px 0;
+                    font-size: 16px;
+                    padding-left: 10px;
+                    border-left: 4px solid #ccc;
+                }
+
+                .info strong {
+                    display: inline-block;
+                    width: 140px;
+                    color: #222;
+                }
+
+                .estado {
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: ${yaIngresado ? '#e67e22' : '#27ae60'};
+                    margin-top: 25px;
+                    background-color: ${yaIngresado ? '#fef2e0' : '#e6f4ea'};
+                    padding: 12px;
+                    border-radius: 8px;
+                }
+
+                .logo {
+                    margin-bottom: 20px;
+                }
+                </style>
+            </head>
+            <body>
+                <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Logo" width="120"/>
+                </div>
+
+                <h1>${mensaje}</h1>
+
+                <div class="info">
+                <p><strong>Nombre:</strong> ${usuario.nombre}</p>
+                <p><strong>Cédula:</strong> ${usuario.cedula}</p>
+                <p><strong>Empresa:</strong> ${usuario.empresa}</p>
+                <p><strong>Cargo:</strong> ${usuario.cargo}</p>
+                <p><strong>Email:</strong> ${usuario.email}</p>
+                <p><strong>BP:</strong> ${usuario.partner}</p>
+                <p><strong>Hora de ingreso:</strong> ${(usuario.fechaIngreso || new Date()).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' })}</p>
+                </div>
+
+                <div class="estado">
+                ${yaIngresado ? '⚠️ Ya ingresó previamente al evento' : '✅ Ingreso registrado con éxito'}
+                </div>
+            </body>
+            </html>
         `);
+
     } catch (error) {
         console.error('Error verificando QR:', error);
         return res.send(`
@@ -285,9 +306,9 @@ exports.ingestaMasiva = async (req, res) => {
                 email: reg.email,
                 cedula: reg.cedula,
                 empresa: reg.empresa,
-                partner:reg.partner,
+                partner: reg.partner,
                 cargo: reg.cargo,
-                nuevo:reg.nuevo,
+                nuevo: reg.nuevo,
                 token,
                 nuevo: false
             });
@@ -310,7 +331,7 @@ exports.obtenerInsights = async (req, res) => {
 
         const totalAsistentes = registros.filter(r => r.estado === 'inactivo').length;
         const nuevos = registros.filter(r => r.nuevo === true).length;
-        const totalRegistrados = (registros.length)-nuevos;
+        const totalRegistrados = (registros.length) - nuevos;
 
         const porcentajeAsistencia =
             totalRegistrados > 0
