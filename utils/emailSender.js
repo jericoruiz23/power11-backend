@@ -28,7 +28,7 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                     style="background-color: #ffffff; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); font-family: Arial, sans-serif; border-collapse: separate; border-spacing: 0;">
                     <tr>
                         <td
-                            style="background: linear-gradient(90deg, #0a2f5c, #1d71b8); padding: 40px 30px 30px; text-align: center; border-top-left-radius: 16px; border-top-right-radius: 16px;">
+                            style="background: linear-gradient(90deg, #0a2f5c, #1d71b8); padding: 40px 30px 30px 20px; text-align: center; border-top-left-radius: 16px; border-top-right-radius: 16px;">
                             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td align="center" style="padding-bottom: 20px;">
@@ -52,7 +52,7 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding: 30px; background-color: #ffffff; color: #000000;">
+                        <td style="padding: 20px; background-color: #ffffff; color: #000000;">
                             <p style="font-size: 16px; margin: 0 0 20px;">
                                 👋 Hola <strong>${nombre}</strong>,<br /><br />
                                 Has sido registrado exitosamente al evento <strong>Power11</strong> de IBM y Nexsys.<br />
