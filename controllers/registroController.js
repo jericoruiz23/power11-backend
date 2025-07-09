@@ -34,7 +34,7 @@ exports.registrarUsuario = async (req, res) => {
             partner,
             celular,
             token,
-            nuevo: false,
+            nuevo: true,
             fechaIngreso: new Date()
         });
 
@@ -287,7 +287,7 @@ exports.ingestaMasiva = async (req, res) => {
                 empresa: reg.empresa,
                 cargo: reg.cargo,
                 token,
-                nuevo: true
+                nuevo: false
             });
 
             await nuevo.save();
