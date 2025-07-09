@@ -308,7 +308,7 @@ exports.obtenerInsights = async (req, res) => {
 
         const totalAsistentes = registros.filter(r => r.estado === 'inactivo').length;
         const nuevos = registros.filter(r => r.nuevo === true).length;
-        const totalRegistrados = registros.filter(r => r.nuevo === false).length-nuevos;
+        const totalRegistrados = registros.filter(r => r.nuevo === false).length;
         const porcentajeAsistencia = totalRegistrados > 0 ? ((totalAsistentes * 100) / (totalRegistrados +nuevos)).toFixed(2) : 0;
 
         return res.json({
