@@ -285,7 +285,9 @@ exports.ingestaMasiva = async (req, res) => {
                 email: reg.email,
                 cedula: reg.cedula,
                 empresa: reg.empresa,
+                partner:reg.partner,
                 cargo: reg.cargo,
+                nuevo:reg.nuevo,
                 token,
                 nuevo: false
             });
