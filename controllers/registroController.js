@@ -3,14 +3,12 @@ const { v4: uuidv4 } = require('uuid');
 const { generarQR } = require('../utils/qrGenerator');
 const { enviarCorreoConQR } = require('../utils/emailSender');
 
-
 const BASE_URL = 'https://power11-form.onrender.com/api/registro/verificar'; // asegúrate de que coincida con tu dominio real
-const SECRET = 'un-secreto-muy-fuerte-que-no-vas-a-compartir';
 
 // CREAR USUARIO
 exports.registrarUsuario = async (req, res) => {
     try {
-        const { nombre, email, cedula, empresa, cargo, partner } = req.body;
+        const { nombre, email, cedula, empresa, cargo, partner, celular } = req.body;
 
         // Validar que no exista ya el email o cédula
         const existente = await Registro.findOne({
@@ -28,7 +26,7 @@ exports.registrarUsuario = async (req, res) => {
 
         // Crear nuevo registro
         const token = uuidv4();
-        const nuevoRegistro = new Registro({ nombre, email, cedula, empresa, cargo,partner, token });
+        const nuevoRegistro = new Registro({ nombre, email, cedula, empresa, cargo,partner, token, celular });
         await nuevoRegistro.save();
 
         // Generar QR con la URL completa

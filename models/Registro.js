@@ -5,6 +5,7 @@ const RegistroSchema = new mongoose.Schema({
     email: String,
     cedula: String,
     empresa: String,
+    celular: String,
     cargo: String,
     partner: String,
     token: String,
