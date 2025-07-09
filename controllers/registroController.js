@@ -24,9 +24,20 @@ exports.registrarUsuario = async (req, res) => {
             });
         }
 
-        // Crear nuevo registro
         const token = uuidv4();
-        const nuevoRegistro = new Registro({ nombre, email, cedula, empresa, cargo,partner, token, celular });
+        const nuevoRegistro = new Registro({
+            nombre,
+            email,
+            cedula,
+            empresa,
+            cargo,
+            partner,
+            celular,
+            token,
+            nuevo: false,
+            fechaIngreso: new Date()
+        });
+
         await nuevoRegistro.save();
 
         // Generar QR con la URL completa
@@ -39,7 +50,6 @@ exports.registrarUsuario = async (req, res) => {
         res.status(500).json({ error: 'Error al registrar usuario' });
     }
 };
-
 // VERIFICAR QR
 exports.verificarQR = async (req, res) => {
     try {
@@ -276,7 +286,8 @@ exports.ingestaMasiva = async (req, res) => {
                 cedula: reg.cedula,
                 empresa: reg.empresa,
                 cargo: reg.cargo,
-                token
+                token,
+                nuevo: true
             });
 
             await nuevo.save();

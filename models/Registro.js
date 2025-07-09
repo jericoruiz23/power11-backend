@@ -14,6 +14,10 @@ const RegistroSchema = new mongoose.Schema({
     correoEnviado: {
         type: Boolean,
         default: false
+    },
+    nuevo: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 
