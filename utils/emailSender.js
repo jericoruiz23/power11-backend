@@ -40,14 +40,10 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                                                 alt="Logo IBM" style="width: 100px; display: inline-block;" />
                                         </div>
                                     </td>
-
-                                    <td valign="middle" style="color: #004080; font-size: 24px; font-weight: 600; text-align: center; padding-left: 20px;">
-                                        ¡Tu invitación al Evento Power11 está Lista!
-                                    </td>
                                 </tr>
 
                                 <tr>
-                                    <td style="color: #ffffff; font-size: 24px; font-weight: 600; text-align: center;">
+                                    <td style="color: #004080; font-size: 24px; font-weight: 600; text-align: center;">
                                         ¡Tu invitación al Evento Power11 está Lista!
                                     </td>
                                 </tr>
