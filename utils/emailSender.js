@@ -41,11 +41,17 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td align="center" style="padding-bottom: 20px;">
-                                            <div style="display: flex; align-items: center; justify-content: center;">
-                                                <img src="cid:nexsyslogo" alt="Logo Nexsys" style="width: 130px; display: inline-block;" />
-                                                <span style="display:inline-block; width:30px;"></span>
-                                                <img src="cid:ibmlogo" alt="Logo IBM" style="width: 100px; display: inline-block;" />
-                                            </div>
+                                            <table align="center" cellpadding="0" cellspacing="0" role="presentation">
+                                                <tr>
+                                                    <td align="center" style="padding-right: 30px;">
+                                                    <img src="cid:nexsyslogo" alt="Logo Nexsys" width="130" style="display: block;" />
+                                                    </td>
+                                                    <td align="center">
+                                                    <img src="cid:ibmlogo" alt="Logo IBM" width="100" style="display: block;" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+
                                         </td>
                                     </tr>
                                     <tr>
