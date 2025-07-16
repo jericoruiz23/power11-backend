@@ -3,7 +3,7 @@ const { createCanvas, loadImage } = require('canvas');
 const path = require('path');
 
 const BASE_URL = 'https://power11-form.onrender.com/api/registro/verificar';
-const LOGO_PATH = path.join(__dirname, './abeja.svg');
+const LOGO_PATH = path.join(__dirname, 'abeja.svg');
 
 exports.generarQR = async (token) => {
   const canvasSize = 500;
