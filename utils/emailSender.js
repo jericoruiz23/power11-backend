@@ -1,5 +1,7 @@
 const nodemailer = require('nodemailer');
 const QRCode = require('qrcode');
+const { generarQR } = require('./qrGenerator');
+
 
 // Configura tu correo Outlook
 const transporter = nodemailer.createTransport({
@@ -14,7 +16,9 @@ const transporter = nodemailer.createTransport({
 
 exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
     const linkQR = `https://power11-form.onrender.com/api/registro/verificar/${token}`;
-    const qrBuffer = await QRCode.toBuffer(linkQR);
+    const qrBase64 = await generarQR(token);
+    const qrBuffer = Buffer.from(qrBase64.split(',')[1], 'base64');
+
 
     const mailOptions = {
         from: `"Power11 Registro" <${process.env.EMAIL_USER}>`,
