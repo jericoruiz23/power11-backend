@@ -78,15 +78,9 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                                 <div
                                     style="background-color: #f8f9fb; border-left: 4px solid #004080; padding: 20px; font-size: 10px; color: #444; border-radius: 8px;">
                                     <p style="margin: 0;">
-                                        <b>Cláusula de Confidencialidad:</b> Este mensaje es confidencial y dirigido
-                                        exclusivamente a su destinatario. Si usted no lo es, elimínelo
-                                        y notifique al remitente. Nexsys del Ecuador no se responsabiliza por el uso indebido de
-                                        la información. Conforme a la Ley Orgánica de
-                                        Protección de Datos, Nexsys del Ecuador puede realizar transferencias internacionales de
-                                        datos por el uso de sistemas con almacenamiento
-                                        externo, así como transferencias a terceros para servicios como facturación, despacho,
-                                        notificación, marketing, entre otros. En Nexsys del
-                                        Ecuador estamos comprometidos con la protección de su información y privacidad.
+                                        <b>Cláusula de Confidencialidad:</b> Este es un mensaje automático, por favor no responder. En Nexsys del Ecuador S.A., 
+                                        protegemos tu información conforme a la Ley Orgánica de Protección de Datos Personales. Conoce nuestras políticas 
+                                        de privacidad y protección de datos personales aquí: <a href="https://www.nexsysla.com/ec/centro-de-ayuda/politicas/privacidad/#privacidad">Privacidad - Nexsys Ecuador</a>.
                                     </p>
                                 </div>
                             </td>
