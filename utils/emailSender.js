@@ -75,11 +75,11 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
 
                                 <div style="text-align: center; margin: 30px 0;">
                                     <img src="cid:qrimage" alt="Código QR" style="width: 220px;" />
-                                    <p style="font-size: 14px; color: #555; margin-top: 10px;">Escanea este código para
+                                    <p style="font-size: 14px; color: #555; margin-top: 10px;">Muestra este código para
                                         verificar tu entrada</p>
                                 </div>
                                 <div style="text-align: center; margin: 30px 0;">
-                                    <a href="https://www.ibm.com/events/power11"
+                                    <a href="https://www.nexsyson.com/IBM/2025/q3/Ecu/Html-34842-IBM-Power11Evento/index.html"
                                         style="display: inline-block; background-color: #004080; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
                                         Ver detalles del evento
                                     </a>
