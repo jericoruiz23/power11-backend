@@ -1,7 +1,8 @@
 const nodemailer = require('nodemailer');
 const QRCode = require('qrcode');
 const { generarQR } = require('./qrGenerator');
-
+const fs = require('fs');
+const path = require('path');
 
 // Configura tu correo Outlook
 const transporter = nodemailer.createTransport({
@@ -19,6 +20,9 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
     const qrBase64 = await generarQR(token);
     const qrBuffer = Buffer.from(qrBase64.split(',')[1], 'base64');
 
+    // Leer imágenes locales desde la misma carpeta
+    const nexsysLogo = fs.readFileSync(path.join(__dirname, 'nexsysLogo.png'));
+    const ibmLogo = fs.readFileSync(path.join(__dirname, 'logoIBM.png'));
 
     const mailOptions = {
         from: `"Power11 Registro" <${process.env.EMAIL_USER}>`,
@@ -38,11 +42,9 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
                                     <tr>
                                         <td align="center" style="padding-bottom: 20px;">
                                             <div style="display: flex; align-items: center; justify-content: center;">
-                                                <img src="https://www.nexsysla.com/co/wp-content/uploads/sites/2/2022/06/nexsys-logo-light-2023.png"
-                                                    alt="Logo Nexsys" style="width: 130px; display: inline-block;" />
+                                                <img src="cid:nexsyslogo" alt="Logo Nexsys" style="width: 130px; display: inline-block;" />
                                                 <span style="display:inline-block; width:30px;"></span>
-                                                <img src="https://myleanacademy.com/wp-content/uploads/2020/01/logo-ibm-png-ibm-logo-png-4464.png"
-                                                    alt="Logo IBM" style="width: 100px; display: inline-block;" />
+                                                <img src="cid:ibmlogo" alt="Logo IBM" style="width: 100px; display: inline-block;" />
                                             </div>
                                         </td>
                                     </tr>
@@ -100,12 +102,21 @@ exports.enviarCorreoConQR = async ({ destinatario, nombre, token }) => {
             </tr>
         </table>
         `,
-
         attachments: [
             {
                 filename: 'qr.png',
                 content: qrBuffer,
                 cid: 'qrimage'
+            },
+            {
+                filename: 'nexsysLogo.png',
+                content: nexsysLogo,
+                cid: 'nexsyslogo'
+            },
+            {
+                filename: 'logoIBM.png',
+                content: ibmLogo,
+                cid: 'ibmlogo'
             }
         ]
     };
