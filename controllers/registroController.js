@@ -320,11 +320,13 @@ exports.obtenerInsights = async (req, res) => {
 
         const totalAsistentes = registros.filter(r => r.estado === 'inactivo').length;
         const nuevos = registros.filter(r => r.nuevo === true).length;
-        const totalRegistrados = (registros.length) - nuevos;
+        const totalRegistrados = registros.filter(r => r.nuevo !== true).length;
+
+        const totalEsperado = totalRegistrados + nuevos;
 
         const porcentajeAsistencia =
-            totalRegistrados > 0
-                ? ((totalAsistentes * 100) / registros.length).toFixed(2)
+            totalEsperado > 0
+                ? ((totalAsistentes * 100) / totalEsperado).toFixed(2)
                 : 0;
 
         return res.json({
@@ -338,3 +340,4 @@ exports.obtenerInsights = async (req, res) => {
         return res.status(500).json({ error: 'Error al obtener métricas' });
     }
 };
+
